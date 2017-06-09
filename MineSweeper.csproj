@@ -61,9 +61,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="FrmMain.xaml.cs">
       <DependentUpon>FrmMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrmOption.xaml.cs">
+      <DependentUpon>FrmOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -89,6 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="FrmMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrmOption.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
