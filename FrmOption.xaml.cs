@@ -83,22 +83,26 @@ namespace MineSweeper
             {
                 rdoLow.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
+                this.Hide();
+                return;
             }
             else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_MIDDLE))
             {
                 rdoMiddle.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_MIDDLE, 16, 16, 40);
+                this.Hide();
+                return;
             }
             else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_HIGH))
             {
                 rdoHigh.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 16, 30, 90);
+                this.Hide();
+                return;
             }
-            else 
-            {
-                rdoLow.IsChecked = true;
-                SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
-            }
+
+            rdoLow.IsChecked = true;
+            SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
         }
 
         private void rdoLow_Checked(object sender, RoutedEventArgs e)

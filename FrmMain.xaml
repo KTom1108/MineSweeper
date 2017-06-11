@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MineSweeper.FrmMain"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MineSweeper" Height="323" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="MineSweeper" Height="356" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel Height="auto" HorizontalAlignment="Stretch" Name="dockPanel1" VerticalAlignment="Stretch" Width="auto" LastChildFill="True">
         <Menu DockPanel.Dock="Top" Height="23" Name="menu1" Width="auto">
             <MenuItem Header="Game">
