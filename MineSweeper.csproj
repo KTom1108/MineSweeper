@@ -61,12 +61,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="btnbtn.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="FrmMain.xaml.cs">
       <DependentUpon>FrmMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrmOption.xaml.cs">
       <DependentUpon>FrmOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MineButton.xaml.cs">
+      <DependentUpon>MineButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="OptionEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,6 +105,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MineButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\Bomb.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,5 +4,5 @@
              StartupUri="FrmMain.xaml">
     <Application.Resources>
          
-    </Application.Resources>
+    </Application.Resources>    
 </Application>
