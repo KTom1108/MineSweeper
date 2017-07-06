@@ -40,6 +40,9 @@ namespace MineSweeper
             SetDataForBombButton();
             SetDataForNumButton();
             CreateButton();
+
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void GetOptionValue() 
@@ -73,12 +76,9 @@ namespace MineSweeper
             this.Close();
         }
 
-        //1.배열생성
-        //2. 난수생성
-
         private void SetDataForBombButton() 
         {
-            Random rd = new Random();
+            var rd = new Random();
             int rdNum = 0;
             for (int i = 0; i < optionEntity.numForMine; i++)
             {
@@ -97,81 +97,81 @@ namespace MineSweeper
 
         private void SetDataForNumButton() 
         {
-            for (int i = 0; i < bomb.Length; i++)
-            {
-                if (bomb[i] == 9)
-                {
-                    if (i == 0)
-                    {
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-                    }
-                    else if (i == optionEntity.hNumForButton - 1)
-                    {
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                    }
-                    else if (i == optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1)
-                    {
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                    }
-                    else if (i == optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
-                    {
-                        if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                    }
-                    else if (i > 0
-                        && i < optionEntity.hNumForButton - 1)
-                    {
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-                    }
-                    else if (i > optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1
-                        && i < optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
-                    {
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-                    }
-                    else if (i % optionEntity.hNumForButton == 0)
-                    {
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-                    }
-                    else if (i % optionEntity.hNumForButton == optionEntity.hNumForButton - 1)
-                    {
-                        if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                    }
-                    else
-                    {
-                        if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-                        if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-                        if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-                    }
-                }
-            }
+            //for (int i = 0; i < bomb.Length; i++)
+            //{
+            //    if (bomb[i] == 9)
+            //    {
+            //        if (i == 0)
+            //        {
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
+            //        }
+            //        else if (i == optionEntity.hNumForButton - 1)
+            //        {
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //        }
+            //        else if (i == optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1)
+            //        {
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //        }
+            //        else if (i == optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
+            //        {
+            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //        }
+            //        else if (i > 0
+            //            && i < optionEntity.hNumForButton - 1)
+            //        {
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
+            //        }
+            //        else if (i > optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1
+            //            && i < optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
+            //        {
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
+            //        }
+            //        else if (i % optionEntity.hNumForButton == 0)
+            //        {
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
+            //        }
+            //        else if (i % optionEntity.hNumForButton == optionEntity.hNumForButton - 1)
+            //        {
+            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //        }
+            //        else
+            //        {
+            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
+            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
+            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
+            //        }
+            //    }
+            //}
         }
 
         private void CreateArrForMineButton() 
@@ -179,31 +179,54 @@ namespace MineSweeper
             bomb = new int[optionEntity.hNumForButton * optionEntity.vNumForButton];
         }
 
-        private void CreateButton() 
+
+        private void SetRowAndColDefinition() 
         {
+            int rCnt = mainGrid.RowDefinitions.Count;
+            int cCnt = mainGrid.ColumnDefinitions.Count;
+
+            for (int i = 0; i < rCnt; i++)
+			{
+			    mainGrid.RowDefinitions.RemoveAt(0);
+			}
+
+            for (int i = 0; i < cCnt; i++)
+            {
+                mainGrid.ColumnDefinitions.RemoveAt(0);
+            }
+
             for (int i = 0; i < optionEntity.hNumForButton; i++)
             {
-                mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1.0, GridUnitType.Star) });
+                mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(33) });
             }
 
             for (int i = 0; i < optionEntity.vNumForButton; i++)
             {
-                mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1.0, GridUnitType.Star) });
+                mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(33) });
             }
+        }
+        private void CreateButton() 
+        {
+            SetRowAndColDefinition();
 
-            var imgBrush = new ImageBrush();
-            imgBrush.ImageSource = new BitmapImage(new Uri(@"../../Image/Bomb.ico", UriKind.Relative));
+            //var imgBrush = new ImageBrush();
+            //imgBrush.ImageSource = new BitmapImage(new Uri(@"../../Image/Bomb.ico", UriKind.Relative));
+
+            Uri uri = new Uri(@"../../Image/Bomb.ico", UriKind.Relative);
+            BitmapImage bitmap = new BitmapImage(uri);
+
 
             for (int i = 0; i < bomb.Length; i++)
             {
                 var mineButton = new ToggleButton();
                 
                 mineButton.Name = CommonMethod.UseStringBuilder("mine", i.ToString());
-                mineButton.Background = Brushes.Gray;
-                mineButton.IsChecked = true;
                 if (bomb[i] == 9)
                 {
-                    mineButton.Background = imgBrush;
+                    Image img = new Image();
+                    img.Source = bitmap;
+                    img.Stretch = Stretch.Fill;
+                    mineButton.Content = img;
                 }
                 else 
                 {

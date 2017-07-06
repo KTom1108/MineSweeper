@@ -61,7 +61,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="btnbtn.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="FrmMain.xaml.cs">
       <DependentUpon>FrmMain.xaml</DependentUpon>
