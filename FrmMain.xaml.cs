@@ -283,10 +283,12 @@ namespace MineSweeper
 
         private void AllButtonClick() 
         {
-
             foreach (ToggleButton btn in mainGrid.Children)
             {
-                btn.IsChecked = true;
+                if (!(bool)btn.IsChecked)
+                {
+                    btn.IsChecked = true;
+                }                
             }
         }
     }
