@@ -35,11 +35,14 @@ namespace MineSweeper
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            entity.isContinue = false;
+            this.Hide();            
         }
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
+            SetDifficulty();
+
             if (!entity.difficultyType.Equals(CommonMethod.GetRegistryKey(CommonCode.REGKEY_LEVEL)))
             {
                 if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_LOW))
@@ -52,14 +55,16 @@ namespace MineSweeper
                 }
                 else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_HIGH))
                 {
-                    SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 16, 30, 90);
+                    SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 30, 16, 90);
                 }
                 else
                 {
                     MessageBox.Show("Please Select Difficulty Class", "Apply", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
             }
 
+            entity.isContinue = true;
             this.Hide();
         }
 
@@ -83,41 +88,46 @@ namespace MineSweeper
             {
                 rdoLow.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
-                this.Hide();
-                return;
             }
             else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_MIDDLE))
             {
                 rdoMiddle.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_MIDDLE, 16, 16, 40);
-                this.Hide();
-                return;
             }
             else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_HIGH))
             {
                 rdoHigh.IsChecked = true;
                 SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 16, 30, 90);
-                this.Hide();
-                return;
+            }
+            else 
+            {
+                rdoLow.IsChecked = true;
+                SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
             }
 
-            rdoLow.IsChecked = true;
-            SetClassValue(CommonCode.REGKEY_LEVELVALUE_LOW, 9, 9, 10);
+            entity.isContinue = true;
+            this.Hide();
         }
 
-        private void rdoLow_Checked(object sender, RoutedEventArgs e)
+        private void SetDifficulty() 
         {
-            entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_LOW;
-        }
-
-        private void rdoMiddle_Checked(object sender, RoutedEventArgs e)
-        {
-            entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_MIDDLE;
-        }
-
-        private void rdoHigh_Checked(object sender, RoutedEventArgs e)
-        {
-            entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_HIGH;
+            if ((bool)rdoLow.IsChecked)
+            {
+                entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_LOW;
+            }
+            else if ((bool)rdoMiddle.IsChecked)
+            {
+                entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_MIDDLE;
+            }
+            else if ((bool)rdoHigh.IsChecked)
+            {
+                entity.difficultyType = CommonCode.REGKEY_LEVELVALUE_HIGH;
+            }
+            else 
+            {
+                MessageBox.Show("Please Select Difficulty Class", "Apply", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Win32;
+using System.Windows.Media;
 
 namespace MineSweeper
 {
@@ -12,6 +13,18 @@ namespace MineSweeper
         public static string REGKEY_LEVELVALUE_LOW = "LOW";
         public static string REGKEY_LEVELVALUE_MIDDLE = "MIDDLE";
         public static string REGKEY_LEVELVALUE_HIGH = "HIGH";
+
+        public static Dictionary<int, SolidColorBrush> numColorDi = new Dictionary<int, SolidColorBrush>() {
+            {0, Brushes.Black},
+            {1, Brushes.Blue},
+            {2, Brushes.Green},
+            {3, Brushes.Orange},
+            {4, Brushes.Brown},
+            {5, Brushes.Pink},
+            {6, Brushes.Purple},
+            {7, Brushes.Gray},
+            {8, Brushes.Gold}
+        };
     }
 
     public class CommonMethod
@@ -60,6 +73,11 @@ namespace MineSweeper
             }
 
             return retVal;
+        }
+
+        public static T GetNumByColorKey<T>(int numValue, Dictionary<int, T> numColorDi)
+        {
+            return numColorDi.Where(x => x.Key == numValue).Select(x => x.Value).FirstOrDefault();
         }
     }
 

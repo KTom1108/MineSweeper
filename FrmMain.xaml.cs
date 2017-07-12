@@ -56,9 +56,12 @@ namespace MineSweeper
             frmOption.SetOptionEntity(optionEntity);
             frmOption.ShowDialog();
 
-            lblLevel.Content = CommonMethod.UseStringBuilder("Level : ", optionEntity.difficultyType, " Class");
-
-            GameStart();
+            if (optionEntity.isContinue)
+	        {
+                lblLevel.Content = CommonMethod.UseStringBuilder("Level : ", optionEntity.difficultyType, " Class");
+                GameStart();
+	        }
+  
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,88 +100,98 @@ namespace MineSweeper
 
         private void SetDataForNumButton() 
         {
-            //for (int i = 0; i < bomb.Length; i++)
-            //{
-            //    if (bomb[i] == 9)
-            //    {
-            //        if (i == 0)
-            //        {
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-            //        }
-            //        else if (i == optionEntity.hNumForButton - 1)
-            //        {
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //        }
-            //        else if (i == optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1)
-            //        {
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //        }
-            //        else if (i == optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
-            //        {
-            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //        }
-            //        else if (i > 0
-            //            && i < optionEntity.hNumForButton - 1)
-            //        {
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-            //        }
-            //        else if (i > optionEntity.hNumForButton * (optionEntity.vNumForButton - 1) + 1
-            //            && i < optionEntity.hNumForButton * optionEntity.vNumForButton - 1)
-            //        {
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-            //        }
-            //        else if (i % optionEntity.hNumForButton == 0)
-            //        {
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-            //        }
-            //        else if (i % optionEntity.hNumForButton == optionEntity.hNumForButton - 1)
-            //        {
-            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //        }
-            //        else
-            //        {
-            //            if (bomb[i - optionEntity.hNumForButton - 1] != 9) { bomb[i - optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton] != 9) { bomb[i - optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i - optionEntity.hNumForButton + 1] != 9) { bomb[i - optionEntity.hNumForButton + 1] += 1; }
-            //            if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
-            //            if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton - 1] != 9) { bomb[i + optionEntity.hNumForButton - 1] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton] != 9) { bomb[i + optionEntity.hNumForButton] += 1; }
-            //            if (bomb[i + optionEntity.hNumForButton + 1] != 9) { bomb[i + optionEntity.hNumForButton + 1] += 1; }
-            //        }
-            //    }
-            //}
+            for (int i = 0; i < bomb.Length; i++)
+            {
+                if (bomb[i] == 9)
+                {
+                    //좌상
+                    if (i == 0)
+                    {
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton + 1] != 9) { bomb[i + optionEntity.vNumForButton + 1] += 1; }
+                    }
+                    //우상
+                    else if (i == optionEntity.vNumForButton - 1)
+                    {
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton - 1] != 9) { bomb[i + optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                    }
+                    //좌하
+                    else if (i == optionEntity.vNumForButton * (optionEntity.hNumForButton - 1))
+                    {
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton + 1] != 9) { bomb[i - optionEntity.vNumForButton + 1] += 1; }
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                    }
+                    //우하
+                    else if (i == (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1)
+                    {
+                        if (bomb[i - optionEntity.vNumForButton - 1] != 9) { bomb[i - optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                    }
+                    //윗줄
+                    else if (i > 0 && i < optionEntity.vNumForButton - 1)
+                    {
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton - 1] != 9) { bomb[i + optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton + 1] != 9) { bomb[i + optionEntity.vNumForButton + 1] += 1; }
+                    }
+                    //아랫줄
+                    else if (i > optionEntity.vNumForButton * (optionEntity.hNumForButton - 1)
+                        && i < (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1)
+                    {
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton - 1] != 9) { bomb[i - optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton + 1] != 9) { bomb[i - optionEntity.vNumForButton + 1] += 1; }
+                    }
+                    //왼쪽 줄
+                    else if (i > 0
+                        && i < (optionEntity.vNumForButton * optionEntity.hNumForButton - 1)
+                        && i % optionEntity.vNumForButton == 0)
+                    {
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton + 1] != 9) { bomb[i - optionEntity.vNumForButton + 1] += 1; }
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton + 1] != 9) { bomb[i + optionEntity.vNumForButton + 1] += 1; }
+                    }
+                    //오른쪽 줄
+                    else if (i > optionEntity.vNumForButton - 1
+                        && i < (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1
+                        && i % optionEntity.vNumForButton == optionEntity.vNumForButton - 1)
+                    {
+                        if (bomb[i - optionEntity.vNumForButton - 1] != 9) { bomb[i - optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton - 1] != 9) { bomb[i + optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                    }
+                    else
+                    {
+                        if (bomb[i - optionEntity.vNumForButton - 1] != 9) { bomb[i - optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton] != 9) { bomb[i - optionEntity.vNumForButton] += 1; }
+                        if (bomb[i - optionEntity.vNumForButton + 1] != 9) { bomb[i - optionEntity.vNumForButton + 1] += 1; }
+                        if (bomb[i - 1] != 9) { bomb[i - 1] += 1; }
+                        if (bomb[i + 1] != 9) { bomb[i + 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton - 1] != 9) { bomb[i + optionEntity.vNumForButton - 1] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton] != 9) { bomb[i + optionEntity.vNumForButton] += 1; }
+                        if (bomb[i + optionEntity.vNumForButton + 1] != 9) { bomb[i + optionEntity.vNumForButton + 1] += 1; }
+                    }
+                }
+            }
         }
 
         private void CreateArrForMineButton() 
         {
             bomb = new int[optionEntity.hNumForButton * optionEntity.vNumForButton];
         }
-
 
         private void SetRowAndColDefinition() 
         {
@@ -205,6 +218,7 @@ namespace MineSweeper
                 mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(33) });
             }
         }
+
         private void CreateButton() 
         {
             SetRowAndColDefinition();
@@ -234,41 +248,7 @@ namespace MineSweeper
                     mineButton.FontSize = 14;
                     mineButton.FontWeight = FontWeights.Bold;
 
-                    if (bomb[i] == 1 )
-                    {
-                        mineButton.Foreground = Brushes.Blue;
-                    }
-                    else if (bomb[i] == 2)
-                    {
-                        mineButton.Foreground = Brushes.Green;
-                    }
-                    else if (bomb[i] == 3)
-                    {
-                        mineButton.Foreground = Brushes.Orange;
-                    }
-                    else if (bomb[i] == 4)
-                    {
-                        mineButton.Foreground = Brushes.Brown;
-                    }
-                    else if (bomb[i] == 5)
-                    {
-                        mineButton.Foreground = Brushes.Pink;
-                    }
-
-                    else if (bomb[i] == 6)
-                    {
-                        mineButton.Foreground = Brushes.Black;
-                    }
-
-                    else if (bomb[i] == 7)
-                    {
-                        mineButton.Foreground = Brushes.Gray;
-                    }
-
-                    else if (bomb[i] == 8)
-                    {
-                        mineButton.Foreground = Brushes.Gold;
-                    }
+                    mineButton.Foreground = CommonMethod.GetNumByColorKey<SolidColorBrush>(bomb[i], CommonCode.numColorDi);                   
                 }
 
                 Grid.SetRow(mineButton, i / optionEntity.vNumForButton);
@@ -279,6 +259,8 @@ namespace MineSweeper
 
 
         }
+
+
 
     }
 }

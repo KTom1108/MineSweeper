@@ -12,5 +12,8 @@ namespace MineSweeper
         public int vNumForButton { get; set; }
 
         public int numForMine { get; set; }
+
+        public bool isContinue { get; set; }
+        public string result { get; set; }
     }
 }
