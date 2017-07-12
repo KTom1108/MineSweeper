@@ -55,7 +55,7 @@ namespace MineSweeper
                 }
                 else if (entity.difficultyType.Equals(CommonCode.REGKEY_LEVELVALUE_HIGH))
                 {
-                    SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 30, 16, 90);
+                    SetClassValue(CommonCode.REGKEY_LEVELVALUE_HIGH, 16, 30, 90);
                 }
                 else
                 {

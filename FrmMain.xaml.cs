@@ -21,7 +21,7 @@ namespace MineSweeper
     {
         private OptionEntity optionEntity;
         private FrmOption frmOption;
-
+        private Image img;
         private int[] bomb = null;
         public FrmMain()
         {
@@ -210,12 +210,12 @@ namespace MineSweeper
 
             for (int i = 0; i < optionEntity.hNumForButton; i++)
             {
-                mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(33) });
+                mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
             }
 
             for (int i = 0; i < optionEntity.vNumForButton; i++)
             {
-                mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(33) });
+                mainGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(30) });
             }
         }
 
@@ -223,33 +223,17 @@ namespace MineSweeper
         {
             SetRowAndColDefinition();
 
-            //var imgBrush = new ImageBrush();
-            //imgBrush.ImageSource = new BitmapImage(new Uri(@"../../Image/Bomb.ico", UriKind.Relative));
-
-            Uri uri = new Uri(@"../../Image/Bomb.ico", UriKind.Relative);
-            BitmapImage bitmap = new BitmapImage(uri);
-
-
             for (int i = 0; i < bomb.Length; i++)
             {
                 var mineButton = new ToggleButton();
                 
                 mineButton.Name = CommonMethod.UseStringBuilder("mine", i.ToString());
-                if (bomb[i] == 9)
-                {
-                    Image img = new Image();
-                    img.Source = bitmap;
-                    img.Stretch = Stretch.Fill;
-                    mineButton.Content = img;
-                }
-                else 
-                {
-                    mineButton.Content = bomb[i].ToString();
-                    mineButton.FontSize = 14;
-                    mineButton.FontWeight = FontWeights.Bold;
-
-                    mineButton.Foreground = CommonMethod.GetNumByColorKey<SolidColorBrush>(bomb[i], CommonCode.numColorDi);                   
-                }
+                mineButton.Tag = i;
+                mineButton.FontSize = 14;
+                mineButton.FontWeight = FontWeights.Bold;
+                mineButton.Background = Brushes.Beige;
+                mineButton.Checked += BtnOnChecked;
+                mineButton.Unchecked += BtnOnChecked;
 
                 Grid.SetRow(mineButton, i / optionEntity.vNumForButton);
                 Grid.SetColumn(mineButton, i % optionEntity.vNumForButton);
@@ -260,7 +244,50 @@ namespace MineSweeper
 
         }
 
+        void BtnOnChecked(object sender, RoutedEventArgs e)
+        {
+            ToggleButton btn = sender as ToggleButton;
 
+            int aa = (int)btn.Tag;
+            if (bomb[aa] == 9)
+            {
+                if ((bool)btn.IsChecked)
+                {
+                    Uri uri = new Uri(@"../../Image/Bomb.ico", UriKind.Relative);
+                    BitmapImage bitmap = new BitmapImage(uri);
 
+                    img = new Image();
+                    img.Source = bitmap;
+                    img.Stretch = Stretch.Fill;
+
+                    btn.Content = img;
+                    AllButtonClick();
+                }
+                else 
+                {
+                    btn.IsChecked = true;
+                }
+            }
+            else 
+            {
+                if ((bool)btn.IsChecked)
+                {
+                    btn.Content = bomb[aa].ToString();
+                }
+                else 
+                {
+                    btn.IsChecked = true;
+                }               
+            }
+        }
+
+        private void AllButtonClick() 
+        {
+
+            foreach (ToggleButton btn in mainGrid.Children)
+            {
+                btn.IsChecked = true;
+            }
+        }
     }
 }
