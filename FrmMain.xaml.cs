@@ -23,7 +23,7 @@ namespace MineSweeper
         private FrmOption frmOption;
         private Image img;
 
-        private int[] bomb = null;
+        private int[] bomb;
 
         private bool isClear = false;
         public FrmMain()
@@ -193,6 +193,7 @@ namespace MineSweeper
 
         private void CreateArrForMineButton() 
         {
+            bomb = null;
             bomb = new int[optionEntity.hNumForButton * optionEntity.vNumForButton];
         }
 
@@ -229,7 +230,7 @@ namespace MineSweeper
             for (int i = 0; i < bomb.Length; i++)
             {
                 var mineButton = new ToggleButton();
-                
+
                 mineButton.Name = CommonMethod.UseStringBuilder("mine", i.ToString());
                 mineButton.Tag = i;
                 mineButton.FontSize = 14;
@@ -280,24 +281,18 @@ namespace MineSweeper
         void BtnOnClickForBtn(object sender, RoutedEventArgs e)
         {
             int tagCnt = 0;
-
-            int mineCnt = 0;
             int btnCnt = 0;
 
             foreach (ToggleButton tBtn in mainGrid.Children)
             {
                 tagCnt = (int)tBtn.Tag;
-                if (!(bool)tBtn.IsChecked && bomb[tagCnt] == 9)
-	            {
-		            mineCnt++;
-	            }
-                else if ((bool)tBtn.IsChecked && bomb[tagCnt] != 9)
+                if (!(bool)tBtn.IsChecked && bomb[tagCnt] != 9)
                 {
                     btnCnt++;
                 }
             }
 
-            if (bomb.Length == btnCnt + mineCnt)
+            if (bomb.Length == btnCnt + optionEntity.numForMine)
             {
                 isClear = true;
             }
