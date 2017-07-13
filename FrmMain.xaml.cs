@@ -22,7 +22,10 @@ namespace MineSweeper
         private OptionEntity optionEntity;
         private FrmOption frmOption;
         private Image img;
+
         private int[] bomb = null;
+
+        private bool isClear = false;
         public FrmMain()
         {
             InitializeComponent();
@@ -232,26 +235,30 @@ namespace MineSweeper
                 mineButton.FontSize = 14;
                 mineButton.FontWeight = FontWeights.Bold;
                 mineButton.Background = Brushes.Beige;
-                mineButton.Checked += BtnOnChecked;
-                mineButton.Unchecked += BtnOnChecked;
+                if (bomb[i].ToString() == "9")
+                {
+                    mineButton.Click += BtnOnClickForMine;                    
+                }
+                else 
+                {
+                    mineButton.Checked += BtnOnCheckedForBtn;
+                    mineButton.Click += BtnOnClickForBtn;
+                }
+
+                mineButton.Unchecked += BtnOnUnChecked;
 
                 Grid.SetRow(mineButton, i / optionEntity.vNumForButton);
                 Grid.SetColumn(mineButton, i % optionEntity.vNumForButton);
 
                 mainGrid.Children.Add(mineButton);
             }
-
-
         }
 
-        void BtnOnChecked(object sender, RoutedEventArgs e)
+        void BtnOnClickForMine(object sender, RoutedEventArgs e)
         {
-            ToggleButton btn = sender as ToggleButton;
-
-            int aa = (int)btn.Tag;
-            if (bomb[aa] == 9)
+            foreach (ToggleButton tBtn in mainGrid.Children)
             {
-                if ((bool)btn.IsChecked)
+                if (bomb[(int)tBtn.Tag] == 9)
                 {
                     Uri uri = new Uri(@"../../Image/Bomb.ico", UriKind.Relative);
                     BitmapImage bitmap = new BitmapImage(uri);
@@ -260,35 +267,220 @@ namespace MineSweeper
                     img.Source = bitmap;
                     img.Stretch = Stretch.Fill;
 
-                    btn.Content = img;
-                    AllButtonClick();
-                }
-                else 
-                {
-                    btn.IsChecked = true;
+                    tBtn.Content = img;
+
+                    tBtn.IsChecked = true;
                 }
             }
-            else 
+
+            MessageBox.Show("lose");
+            GameStart();
+        }
+
+        void BtnOnClickForBtn(object sender, RoutedEventArgs e)
+        {
+            int tagCnt = 0;
+
+            int mineCnt = 0;
+            int btnCnt = 0;
+
+            foreach (ToggleButton tBtn in mainGrid.Children)
             {
-                if ((bool)btn.IsChecked)
+                tagCnt = (int)tBtn.Tag;
+                if (!(bool)tBtn.IsChecked && bomb[tagCnt] == 9)
+	            {
+		            mineCnt++;
+	            }
+                else if ((bool)tBtn.IsChecked && bomb[tagCnt] != 9)
                 {
-                    btn.Content = bomb[aa].ToString();
+                    btnCnt++;
                 }
-                else 
-                {
-                    btn.IsChecked = true;
-                }               
+            }
+
+            if (bomb.Length == btnCnt + mineCnt)
+            {
+                isClear = true;
+            }
+
+            if (isClear)
+            {
+                MessageBox.Show("win");
+                GameStart();
             }
         }
 
-        private void AllButtonClick() 
+        void BtnOnUnChecked(object sender, RoutedEventArgs e)
         {
+            ToggleButton btn = sender as ToggleButton;
+            btn.IsChecked = true;
+        }
+
+        void BtnOnCheckedForBtn(object sender, RoutedEventArgs e)
+        {
+            ToggleButton btn = sender as ToggleButton;
+
+            int num = (int)btn.Tag;
+
+            if ((bool)btn.IsChecked)
+            {
+                btn.Content = bomb[num].ToString();
+                btn.Foreground = CommonMethod.GetNumByColorKey<SolidColorBrush>(bomb[num], CommonCode.numColorDi);
+                if (bomb[num] == 0)
+                {
+                    BtnCheckedForReguler(num);
+                }
+            }     
+        }
+
+        private void BtnCheckedForReguler(int num) 
+        {
+            int tagNum = 0;
+
             foreach (ToggleButton btn in mainGrid.Children)
             {
-                if (!(bool)btn.IsChecked)
+                if (bomb[num] == 0)
                 {
-                    btn.IsChecked = true;
-                }                
+                    tagNum = (int)btn.Tag;
+
+                    //좌상
+                    if (num == 0)
+                    {
+                        if (tagNum == num + 1
+                            || tagNum == num + optionEntity.vNumForButton
+                            || tagNum == num + optionEntity.vNumForButton + 1)
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //우상
+                    else if (num == optionEntity.vNumForButton - 1)
+                    {
+                        if (tagNum == num - 1
+                            || tagNum == num + optionEntity.vNumForButton - 1
+                            || tagNum == num + optionEntity.vNumForButton)
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //좌하
+                    else if (num == optionEntity.vNumForButton * (optionEntity.hNumForButton - 1))
+                    {
+                        if (tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - optionEntity.vNumForButton + 1
+                            || tagNum == num + 1)
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //우하
+                    else if (num == (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1)
+                    {                        
+                        if (tagNum == num - optionEntity.vNumForButton - 1
+                            || tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - 1)
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //윗줄
+                    else if (num > 0 && num < optionEntity.vNumForButton - 1)
+                    {
+                        if (tagNum == num - 1
+                            || tagNum == num + 1
+                            || tagNum == num + optionEntity.vNumForButton - 1
+                            || tagNum == num + optionEntity.vNumForButton
+                            || tagNum == num + optionEntity.vNumForButton + 1)
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //아랫줄
+                    else if (num > optionEntity.vNumForButton * (optionEntity.hNumForButton - 1)
+                        && num < (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1)
+                    {
+                        if (tagNum == num - 1
+                            || tagNum == num + 1
+                            || tagNum == num - optionEntity.vNumForButton - 1
+                            || tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - optionEntity.vNumForButton + 1
+                        )
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //왼쪽 줄
+                    else if (num > 0
+                        && num < (optionEntity.vNumForButton * optionEntity.hNumForButton - 1)
+                        && num % optionEntity.vNumForButton == 0)
+                    {
+                        if (tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - optionEntity.vNumForButton + 1
+                            || tagNum == num + 1
+                            || tagNum == num + optionEntity.vNumForButton
+                            || tagNum == num + optionEntity.vNumForButton + 1
+                        )
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    //오른쪽 줄
+                    else if (num > optionEntity.vNumForButton - 1
+                        && num < (optionEntity.vNumForButton * optionEntity.hNumForButton) - 1
+                        && num % optionEntity.vNumForButton == optionEntity.vNumForButton - 1)
+                    {
+                        if (tagNum == num - optionEntity.vNumForButton - 1
+                            || tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - 1
+                            || tagNum == num + optionEntity.vNumForButton - 1
+                            || tagNum == num + optionEntity.vNumForButton
+                            )
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (tagNum == num - optionEntity.vNumForButton - 1
+                            || tagNum == num - optionEntity.vNumForButton
+                            || tagNum == num - optionEntity.vNumForButton + 1
+                            || tagNum == num - 1
+                            || tagNum == num + 1
+                            || tagNum == num + optionEntity.vNumForButton - 1
+                            || tagNum == num + optionEntity.vNumForButton
+                            || tagNum == num + optionEntity.vNumForButton + 1
+                            )
+                        {
+                            if (!(bool)btn.IsChecked)
+                            {
+                                btn.IsChecked = true;
+                            }
+                        }
+                    }     
+                }
             }
         }
     }
