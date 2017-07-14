@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/bomb.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/flag.ico")]
 
 

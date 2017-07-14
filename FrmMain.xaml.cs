@@ -21,7 +21,8 @@ namespace MineSweeper
     {
         private OptionEntity optionEntity;
         private FrmOption frmOption;
-        private Image img;
+        private Image imgBomb;
+        private Image imgFlag;
 
         private int[] bomb;
 
@@ -242,14 +243,14 @@ namespace MineSweeper
                 mineButton.Background = Brushes.Beige;
                 if (bomb[i].ToString() == "9")
                 {
-                    mineButton.Click += BtnOnClickForMine;                    
+                    mineButton.Click += BtnOnClickForMine;    
                 }
                 else 
                 {
                     mineButton.Checked += BtnOnCheckedForBtn;
                     mineButton.Click += BtnOnClickForBtn;
                 }
-
+                mineButton.MouseRightButtonDown += BtnOnCheckForMine;
                 mineButton.Unchecked += BtnOnUnChecked;
 
                 Grid.SetRow(mineButton, i / optionEntity.vNumForButton);
@@ -259,31 +260,73 @@ namespace MineSweeper
             }
         }
 
+        void BtnOnCheckForMine(object sender, RoutedEventArgs e) 
+        {
+            ToggleButton btn = sender as ToggleButton;
+            if (!(bool)btn.IsChecked)
+            {
+                if (btn.Background == null)
+                {
+                    btn.Content = null;
+                    btn.Background = Brushes.Beige;
+                }
+                else
+                {
+                    Uri uri = new Uri(@"\image\Flag.ico", UriKind.Relative);
+                    BitmapImage bitmap = new BitmapImage(uri);
+
+                    imgFlag = new Image();
+                    imgFlag.Source = bitmap;
+                    imgFlag.Stretch = Stretch.Fill;
+                    btn.Background = null;
+                    btn.Content = imgFlag;
+                }
+            }
+        }
+
+
         void BtnOnClickForMine(object sender, RoutedEventArgs e)
         {
+            ToggleButton btn = sender as ToggleButton;
+
+            if (btn.Background == null)
+            {
+                btn.IsChecked = false;
+                return;
+            }
+
+
             foreach (ToggleButton tBtn in mainGrid.Children)
             {
                 if (bomb[(int)tBtn.Tag] == 9)
                 {
-                    Uri uri = new Uri(@"../../Image/Bomb.ico", UriKind.Relative);
+                    Uri uri = new Uri(@"\image\Bomb.ico", UriKind.Relative);
                     BitmapImage bitmap = new BitmapImage(uri);
 
-                    img = new Image();
-                    img.Source = bitmap;
-                    img.Stretch = Stretch.Fill;
+                    imgBomb = new Image();
+                    imgBomb.Source = bitmap;
+                    imgBomb.Stretch = Stretch.Fill;
 
-                    tBtn.Content = img;
+                    tBtn.Content = imgBomb;
 
                     tBtn.IsChecked = true;
                 }
             }
 
-            MessageBox.Show("lose");
+            MessageBox.Show("You Lose");
             GameStart();
         }
 
         void BtnOnClickForBtn(object sender, RoutedEventArgs e)
         {
+            ToggleButton btn = sender as ToggleButton;
+
+            if (btn.Background == null)
+            {
+                btn.IsChecked = false;
+                return;
+            }
+
             int tagCnt = 0;
             int btnCnt = 0;
 
@@ -303,7 +346,7 @@ namespace MineSweeper
 
             if (isClear)
             {
-                MessageBox.Show("win");
+                MessageBox.Show("You Win");
                 GameStart();
             }
         }
@@ -317,6 +360,12 @@ namespace MineSweeper
         void BtnOnCheckedForBtn(object sender, RoutedEventArgs e)
         {
             ToggleButton btn = sender as ToggleButton;
+
+            if (btn.Background == null)
+            {
+                btn.IsChecked = false;
+                return;
+            }
 
             int num = (int)btn.Tag;
 
