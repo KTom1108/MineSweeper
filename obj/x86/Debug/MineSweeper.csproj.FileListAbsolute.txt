@@ -11,5 +11,3 @@ C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\MineSweeper.exe
 C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\MineSweeper.pdb
 C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\FrmOption.baml
 C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\FrmOption.g.cs
-C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\MineButton.baml
-C:\Users\taemin.k\Documents\GitHub\MineSweeper\obj\x86\Debug\MineButton.g.cs

@@ -25,7 +25,7 @@ namespace MineSweeper
 
         private int[] bomb;
 
-        private bool isClear = false;
+        private bool isClear;
         public FrmMain()
         {
             InitializeComponent();
@@ -39,6 +39,7 @@ namespace MineSweeper
 
         private void GameStart() 
         {
+            isClear = false;
             CreateArrForMineButton();
             SetDataForBombButton();
             SetDataForNumButton();
@@ -202,15 +203,18 @@ namespace MineSweeper
             int rCnt = mainGrid.RowDefinitions.Count;
             int cCnt = mainGrid.ColumnDefinitions.Count;
 
-            for (int i = 0; i < rCnt; i++)
-			{
-			    mainGrid.RowDefinitions.RemoveAt(0);
-			}
+            mainGrid.RowDefinitions.Clear();
+            mainGrid.ColumnDefinitions.Clear();
+            mainGrid.Children.Clear();
+            //for (int i = 0; i < rCnt; i++)
+            //{
+            //    mainGrid.RowDefinitions.RemoveAt(0);
+            //}
 
-            for (int i = 0; i < cCnt; i++)
-            {
-                mainGrid.ColumnDefinitions.RemoveAt(0);
-            }
+            //for (int i = 0; i < cCnt; i++)
+            //{
+            //    mainGrid.ColumnDefinitions.RemoveAt(0);
+            //}
 
             for (int i = 0; i < optionEntity.hNumForButton; i++)
             {
@@ -286,7 +290,7 @@ namespace MineSweeper
             foreach (ToggleButton tBtn in mainGrid.Children)
             {
                 tagCnt = (int)tBtn.Tag;
-                if (!(bool)tBtn.IsChecked && bomb[tagCnt] != 9)
+                if ((bool)tBtn.IsChecked && bomb[tagCnt] != 9)
                 {
                     btnCnt++;
                 }
