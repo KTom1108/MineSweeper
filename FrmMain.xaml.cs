@@ -206,16 +206,7 @@ namespace MineSweeper
 
             mainGrid.RowDefinitions.Clear();
             mainGrid.ColumnDefinitions.Clear();
-            mainGrid.Children.Clear();
-            //for (int i = 0; i < rCnt; i++)
-            //{
-            //    mainGrid.RowDefinitions.RemoveAt(0);
-            //}
-
-            //for (int i = 0; i < cCnt; i++)
-            //{
-            //    mainGrid.ColumnDefinitions.RemoveAt(0);
-            //}
+            mainGrid.Children.Clear();            
 
             for (int i = 0; i < optionEntity.hNumForButton; i++)
             {
@@ -529,6 +520,14 @@ namespace MineSweeper
                         }
                     }     
                 }
+            }
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (Key.F3 == e.Key)
+            {
+                this.WindowState = WindowState.Minimized;                
             }
         }
     }
