@@ -23,7 +23,7 @@ namespace MineSweeper
 
         OptionEntity entity;
 
-        public FrmOption()
+        private FrmOption()
         {
             InitializeComponent();
         }

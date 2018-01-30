@@ -26,7 +26,9 @@ namespace MineSweeper
 
         private int[] bomb;
 
+        private int currentBombNum;
         private bool isClear;
+
         public FrmMain()
         {
             InitializeComponent();
@@ -64,9 +66,11 @@ namespace MineSweeper
             if (optionEntity.isContinue)
 	        {
                 lblLevel.Content = CommonMethod.UseStringBuilder("Level : ", optionEntity.difficultyType, " Class");
+                currentBombNum = optionEntity.numForMine;
+                SetBombText(0);
+                
                 GameStart();
-	        }
-  
+	        }  
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -260,6 +264,8 @@ namespace MineSweeper
                 {
                     btn.Content = null;
                     btn.Background = Brushes.Beige;
+
+                    SetBombText(+1);
                 }
                 else
                 {
@@ -271,10 +277,11 @@ namespace MineSweeper
                     imgFlag.Stretch = Stretch.Fill;
                     btn.Background = null;
                     btn.Content = imgFlag;
+
+                    SetBombText(-1);
                 }
             }
         }
-
 
         void BtnOnClickForMine(object sender, RoutedEventArgs e)
         {
@@ -285,7 +292,6 @@ namespace MineSweeper
                 btn.IsChecked = false;
                 return;
             }
-
 
             foreach (ToggleButton tBtn in mainGrid.Children)
             {
@@ -528,6 +534,27 @@ namespace MineSweeper
             if (Key.F3 == e.Key)
             {
                 this.WindowState = WindowState.Minimized;                
+            }
+        }
+
+        private void SetBombText(int num)
+        {
+            string strTmp = string.Empty;
+
+            currentBombNum += num;
+            strTmp = Convert.ToString(currentBombNum);
+
+            if (strTmp.Length == 1)
+            {
+                textBlock1.Text = CommonMethod.UseStringBuilder("0", "0", strTmp);
+            }
+            else if(strTmp.Length == 1)
+            {
+                textBlock1.Text = CommonMethod.UseStringBuilder("0", strTmp);
+            }
+            else
+            {
+                textBlock1.Text = strTmp;
             }
         }
     }
